@@ -16,5 +16,16 @@ export const workBookService = {
                 "workbookName":name
             });
         }else return response(baseResponse.DB_ERROR);
+    },
+
+    getAll : async(id) =>{
+        const connection = await pool.getConnection(async conn => conn);
+        const getResults = await workBookDao.getAll(connection,id);
+        connection.release();
+        if(getResults){
+            return response(baseResponse.SUCCESS,{
+                getResults
+            });
+        }else return response(baseResponse.DB_ERROR);
     }
 }
