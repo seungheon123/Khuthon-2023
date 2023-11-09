@@ -34,5 +34,6 @@ export const kakaoController = async(req,res)=>{
         return res.status(200).send(result);
     }catch(err){
         console.log(err);
+        return res.status(400).send(response(baseResponse,err.message));
     }
 }
