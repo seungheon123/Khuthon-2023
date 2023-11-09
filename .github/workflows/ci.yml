@@ -1,0 +1,36 @@
+name: Khuton node CI/CD
+
+on:
+    push:
+        branches: ["main"]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18.x]
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Set up Node.js 18.x # 노드 설치
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18.x # 버전 확인!
+
+            - name: Login Dockerhub
+              env: 
+                  DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+              run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+            - name: Build Docker image
+              run: docker build -t khuthon-node .
+
+            - name: Tagging
+              run: docker tag khuton-node:latest seungheon123/khuthon-node:latest
+
+            - name: Push to Dockerhub
+              run: docker push seungheon123/khuthon-node:latest
+
+
