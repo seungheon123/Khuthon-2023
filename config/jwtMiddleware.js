@@ -6,7 +6,7 @@ import { errResponse } from "./response.js";
 
 export const jwtMiddleware = (req,res,next) =>{
     // read the token from header or url
-    const token = req.headers['x-access-token'] || req.query.token;
+    const token = req.headers.authorization || req.query.token;
     // token does not exist
     if(!token) {
         return res.send(errResponse(baseResponse.TOKEN_EMPTY))
@@ -15,7 +15,7 @@ export const jwtMiddleware = (req,res,next) =>{
     // create a promise that decodes the token
     const p = new Promise(
         (resolve, reject) => {
-            jwt.verify(token, secret_config.jwtsecret , (err, verifiedToken) => {
+            jwt.verify(token, process.env.JWT_SECRET, (err, verifiedToken) => {
                 if(err) reject(err);
                 resolve(verifiedToken)
             })
