@@ -11,9 +11,9 @@ export const findMemberByEmail = async(connection,email)=>{
 
 export const newMember = async(connection,email,provider)=>{
     const newMemberQuery = `
-        INSERT INTO user(user_email, provider)
+        INSERT INTO member(email, social_type)
         VALUES(?,?);
     `;
-    const newMemberRow = await connection.query(newMemberQuery,email,provider);
+    const newMemberRow = await connection.query(newMemberQuery,[email,provider]);
     return newMemberQuery[0];
 }

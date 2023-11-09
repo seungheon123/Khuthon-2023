@@ -5,21 +5,22 @@ import { kakaoService } from "./authService";
 dotenv.config();
 
 export const kakaoController = async(req,res)=>{
+    const code = req.query.code;
     try{
         const accessTokenResponse = await axios({ //카카오 API 호출해서 Access Token 받아오기
             method: 'POST',
             url: 'https://kauth.kakao.com/oauth/token',
             headers:{
-                'content-type': 'application/x-www-form-urlencoded'
+                'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
             },
             data: {
                 grant_type: 'authorization_code',
                 client_id: process.env.KAKAO_ID,
-                redirect_uri: 'https://localhost:3000/oauth',
+                redirect_uri: 'http://localhost:3000/oauth',
                 code: code,
             }
         });
-        accessToken = accessTokenResponse.data.access_token;
+        const accessToken = accessTokenResponse.data.access_token;
         const userInfoResponse = await axios({ //카카오 API 호출해서 사용자 정보 불러오기
             method: 'GET',
             url:'https://kapi.kakao.com/v2/user/me',
@@ -29,9 +30,9 @@ export const kakaoController = async(req,res)=>{
             }
         });
         const userInfo = userInfoResponse.data.kakao_account;
-        const result = kakaoService(userInfo);
+        const result = await kakaoService(userInfo);
         return res.status(200).send(result);
     }catch(err){
-        console.log(err.log);
+        console.log(err);
     }
 }
