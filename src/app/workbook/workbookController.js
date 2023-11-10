@@ -23,5 +23,15 @@ export const workBookControlelr = {
             console.log(err);
             return res.status(400).send(response(baseResponse,err.message));
         }
+    },
+    getDetail : async(req,res)=>{
+        try{
+            const id = req.param.id;
+            const result = await workBookService.getDetail(id);
+            return res.status(200).send(result);
+        }catch(err){
+            console.log(err);
+            return res.status(400).send(response(baseResponse,err.message));
+        }
     }
 }

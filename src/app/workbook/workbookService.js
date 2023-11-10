@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import { response } from "../../../config/response";
 import baseResponse from "../../../config/baseResponseStatus";
 import { workBookDao } from "./workbookDao";
+import { BlanksDao } from "../blanks/blanksDao";
+import { SubjectiveDao } from "../subjective/subjectiveDao";
 
 
 export const workBookService = {
@@ -29,5 +31,19 @@ export const workBookService = {
                 getResults
             });
         }else return response(baseResponse.DB_ERROR);
+    },
+
+    getDetail : async(id)=>{
+        const connection = await pool.getConnection(async conn => conn);
+        const blankText = await BlanksDao.getText(connection,id);
+        const blankAnswers = await BlanksDao.getAnswers(connection,id);
+        const quiz = await SubjectiveDao.getDetail(connection,id);
+        connection.release();
+        return response(baseResponse.SUCCESS,{
+            "text" : blankText,
+            blankAnswers,
+            quiz
+        })
+        
     }
 }
