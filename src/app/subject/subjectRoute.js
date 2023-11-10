@@ -6,5 +6,6 @@ const subjectRouter = express.Router();
 
 subjectRouter.post("/create",SubjectController.create);
 subjectRouter.get("/getAll",SubjectController.getAll);
+subjectRouter.get("/main",SubjectController.main);
 
 export default subjectRouter;

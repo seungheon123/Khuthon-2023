@@ -15,6 +15,7 @@ export const SubjectDao = {
             WHERE member_id = ?;
         `
         const [getAllRow] = await connection.query(getAllQuery,id);
-        return getAllRow[0];
+        return getAllRow;
+        
     }
 }

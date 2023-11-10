@@ -26,5 +26,14 @@ export const SubjectController = {
             console.log(err.message);
             return res.status(400).send(response(baseResponse,err.message));
         }
+    },
+    main : async(req,res)=>{
+        try{
+            const id = req.headers['member-id']
+            const result = await SubjectService.main(id);
+        }catch(err){
+            console.log(err.message);
+            return res.status(400).send(response(baseResponse,err.message));
+        }
     }
 }

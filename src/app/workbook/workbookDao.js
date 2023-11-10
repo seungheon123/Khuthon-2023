@@ -24,6 +24,6 @@ export const workBookDao = {
         `
         const insertSummaryRow = await connection.query(insertSummaryQuery,[summary,id]);
         return insertSummaryRow;
-    },
+    }
 
 }
