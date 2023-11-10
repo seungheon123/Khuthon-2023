@@ -15,7 +15,7 @@ export const kakaoService = async(userInfo)=>{
     let token;
     if(exUser){
         token = jwt.sign({
-            member_id : exUser.members_id,
+            member_id : exUser.member_id,
             email : exUser.email,
         },
         process.env.JWT_SECRET,{
@@ -24,7 +24,7 @@ export const kakaoService = async(userInfo)=>{
         connection.release();
         return response(baseResponse.SUCCESS,
             {
-                'id' : exUser.members_id,
+                'id' : exUser.member_id,
                 'token' : token,
                 'expires' : "7d",
         });
