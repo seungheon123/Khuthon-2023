@@ -13,9 +13,8 @@ export const QuestionService = {
         const keyWordsList = keyWords.data.keywords;
         //const questions = await SubjectiveService.getQuestions(subNo,text);
         const modifiedText = replaceKeywordsWithBlank(text, keyWordsList);
-        console.log(modifiedText);
         //console.log(questions);
-        return response(baseResponse.SUCCESS,{modifiedText,keyWords});
+        return response(baseResponse.SUCCESS,{modifiedText,keyWordsList});
     }
 }
 
