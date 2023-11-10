@@ -18,11 +18,12 @@ export const workBookDao = {
     },
     insertSummary : async(connection,id,summary)=>{
         const insertSummaryQuery = `
-            INSERT INTO workbook(summary)
-            VALUES(?)
+            UPDATE workbook
+            SET summary = ?
             WHERE workbook_id = ?;
         `
-        const insertSummaryRow = await connection.query(insertSummaryQuery,summary,id);
+        const insertSummaryRow = await connection.query(insertSummaryQuery,[summary,id]);
+        return insertSummaryRow;
     },
 
 }
