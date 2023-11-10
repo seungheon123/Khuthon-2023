@@ -8,13 +8,13 @@ export const QuestionService = {
         const text = body.text;
         //const keyWords = body.keyWords;
         const blankNo = body.BlankNo;
-        //const subNo = body.SubNo;
+        const subNo = body.SubNo;
         const keyWords = await BlankService.getBlanks(blankNo,text);
         const keyWordsList = keyWords.data.keywords;
-        //const questions = await SubjectiveService.getQuestions(subNo,text);
+        const questions = await SubjectiveService.getQuestions(subNo,text);
         const modifiedText = replaceKeywordsWithBlank(text, keyWordsList);
-        //console.log(questions);
-        return response(baseResponse.SUCCESS,{modifiedText,keyWordsList});
+        console.log(questions);
+        return response(baseResponse.SUCCESS,{keyWordsList,modifiedText,questions});
     }
 }
 
