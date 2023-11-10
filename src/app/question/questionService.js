@@ -6,15 +6,21 @@ import baseResponse from "../../../config/baseResponseStatus";
 export const QuestionService = {
     createQuestions : async(body)=>{
         const text = body.text;
-        //const keyWords = body.keyWords;
         const blankNo = body.BlankNo;
         const subNo = body.SubNo;
+
         const keyWords = await BlankService.getBlanks(blankNo,text);
         const keyWordsList = keyWords.data.keywords;
         const questions = await SubjectiveService.getQuestions(subNo,text);
         const modifiedText = replaceKeywordsWithBlank(text, keyWordsList);
         console.log(questions);
         return response(baseResponse.SUCCESS,{keyWordsList,modifiedText,questions});
+        /* 수진이꺼
+        const text = body.text;
+        const keyWords = body.keyWords;
+        const modifiedText = replaceKeywordsWithBlank(text, keyWordsList);
+        return response(baseResponse.SUCCESS,{keyWordsList,modifiedText});
+        */
     }
 }
 
