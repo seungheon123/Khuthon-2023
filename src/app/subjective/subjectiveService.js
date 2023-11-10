@@ -10,7 +10,7 @@ export const SubjectiveService = {
             },
             data : {
                 "text" : text,
-                "number": number
+                "n": number
             }
         });
         return result;
