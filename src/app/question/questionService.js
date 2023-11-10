@@ -10,11 +10,11 @@ export const QuestionService = {
         const blankNo = body.BlankNo;
         const subNo = body.SubNo;
         const keyWords = await BlankService.getBlanks(blankNo,text);
-        const questions = await SubjectiveService.getQuestions(subNo,text);
+        //const questions = await SubjectiveService.getQuestions(subNo,text);
         const modifiedText = replaceKeywordsWithBlank(text, keyWords);
         console.log(modifiedText);
-        console.log(questions);
-        return response(baseResponse.SUCCESS,modifiedText,questions);
+        //console.log(questions);
+        return response(baseResponse.SUCCESS,modifiedText);
     }
 }
 
