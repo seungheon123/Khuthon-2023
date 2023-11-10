@@ -8,7 +8,7 @@ export const BlankService = {
                 "Content-Type" : "application/json"
             },
             data : {
-                "text" : "text",
+                "text" : text,
                 "n": number,
             }
         });
