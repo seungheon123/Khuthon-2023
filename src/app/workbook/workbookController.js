@@ -7,8 +7,7 @@ import baseResponse from "../../../config/baseResponseStatus";
 export const workBookControlelr = {
     create : async(req,res)=>{
         try{
-            const memberId = req.verifiedToken.member_id;
-            const result = await workBookService.create(req.body,memberId);
+            const result = await workBookService.create(req.body);
             return res.status(200).send(result);
         }catch(err){
             console.log(err);
@@ -17,8 +16,8 @@ export const workBookControlelr = {
     },
     getAll : async(req,res)=>{
         try{
-            const memberId = req.verifiedToken.member_id;
-            const result = await workBookService.getAll(memberId);
+            const id = req.param.id;
+            const result = await workBookService.getAll(id);
             return res.status(200).send(result);
         }catch(err){
             console.log(err);

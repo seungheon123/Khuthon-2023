@@ -1,3 +1,4 @@
+import axios from "axios";
 
 export const SubjectiveService = {
     getQuestions : async(text,number)=>{
