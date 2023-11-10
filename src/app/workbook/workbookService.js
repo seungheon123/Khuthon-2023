@@ -6,14 +6,17 @@ import { workBookDao } from "./workbookDao";
 
 
 export const workBookService = {
-    create : async(name,id) =>{
+    create : async(body,id) =>{
+        const name = body.name;
+        const explanation = body.explanation;
         const connection = await pool.getConnection(async conn => conn);
-        const createResult = await workBookDao.create(connection,name,id);
+        const createResult = await workBookDao.create(connection,name,explanation,id);
         connection.release();
         if(createResult){
             return response(baseResponse.SUCCESS,{
                 "workbookId":createResult.insertId,
-                "workbookName":name
+                "workbookName":name,
+                "explanation":explanation
             });
         }else return response(baseResponse.DB_ERROR);
     },

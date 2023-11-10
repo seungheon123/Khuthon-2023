@@ -8,13 +8,14 @@ dotenv.config();
 
 export const kakaoService = async(userInfo)=>{
     const email = userInfo.email;
+    const name = userInfo.profile.nickname;
     const connection = await pool.getConnection(async conn => conn);
     const exUser = await findMemberByEmail(connection,email);
     const provider = 'kakao';
     let token;
     if(exUser){
         token = jwt.sign({
-            member_id : exUser.member_id,
+            member_id : exUser.members_id,
             email : exUser.email,
         },
         process.env.JWT_SECRET,{
@@ -23,17 +24,18 @@ export const kakaoService = async(userInfo)=>{
         connection.release();
         return response(baseResponse.SUCCESS,
             {
-                'id' : exUser.member_id,
+                'id' : exUser.members_id,
                 'token' : token,
-                'expires' : "7d"
+                'expires' : "7d",
         });
     }
     else{
-        const newUser = await newMember(connection,email,provider);
+        const newUser = await newMember(connection,email,name,provider);
+        console.log(newUser);
         connection.release();
         if(newUser){
             token = jwt.sign({
-                member_id : newUser.member_id,
+                member_id : newUser.insertId,
                 email : newUser.email
             },
             process.env.JWT_SECRET,{
@@ -42,9 +44,9 @@ export const kakaoService = async(userInfo)=>{
         }
         return response(baseResponse.SUCCESS,
             {
-                'id' : newUser.member_id,
+                'id' : newUser.insertId,
                 'token' : token,
-                'expires' : "7d"
+                'expires' : "7d",
         });
     }
 }

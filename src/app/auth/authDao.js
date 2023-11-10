@@ -1,7 +1,7 @@
 export const findMemberByEmail = async(connection,email)=>{
     const findMemberQuery = `
         SELECT *
-        FROM member
+        FROM members
         WHERE email = ?;
     `;
     const [findMemberRow] = await connection.query(findMemberQuery,email);
@@ -9,11 +9,11 @@ export const findMemberByEmail = async(connection,email)=>{
 }
 
 
-export const newMember = async(connection,email,provider)=>{
+export const newMember = async(connection,email,name,provider)=>{
     const newMemberQuery = `
-        INSERT INTO member(email, social_type)
-        VALUES(?,?);
+        INSERT INTO members(email, name, social_type)
+        VALUES(?,?,?);
     `;
-    const newMemberRow = await connection.query(newMemberQuery,[email,provider]);
-    return newMemberQuery[0];
+    const [newMemberRow] = await connection.query(newMemberQuery,[email,name,provider]);
+    return newMemberRow;
 }

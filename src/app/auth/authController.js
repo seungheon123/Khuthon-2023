@@ -1,6 +1,8 @@
 import axios from "axios";
 import dotenv from "dotenv"
 import { kakaoService } from "./authService";
+import { response } from "../../../config/response";
+import baseResponse from "../../../config/baseResponseStatus";
 
 dotenv.config();
 
