@@ -33,24 +33,22 @@ export const SubjectService = {
                     name: workBook.name,
                     percent: ForgettingCurve(workBook.last_seen)
                 }));
-                console.log("**")
                 console.log(workBooks);
-                console.log("**")
-                
                 const subjectStat = {
                     subjectName: allSubjects[i].name,
                     workBooks: workBooks
                 };
         
                 subjectStatistics.push(subjectStat);
-        
-                console.log(`${subjectStat.subjectName}:`);
-                workBooks.forEach(book => {
-                    console.log(`  ${book.name} - ${book.percent}%`);
-                });
+                
             }
         }
-        console.log("**")
-        console.log(subjectStatistics);
+        console.log(JSON.stringify(subjectStatistics, null, 2));
+        const extractedObjects = subjectStatistics.map(subject => ({
+            subjectName: subject.subjectName,
+            workBooks: subject.workBooks
+        }));
+        
+        return response(baseResponse.SUCCESS, extractedObjects);
     }
 }

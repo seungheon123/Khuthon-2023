@@ -31,6 +31,7 @@ export const SubjectController = {
         try{
             const id = req.headers['member-id']
             const result = await SubjectService.main(id);
+            return res.status(200).send(result);
         }catch(err){
             console.log(err.message);
             return res.status(400).send(response(baseResponse,err.message));
