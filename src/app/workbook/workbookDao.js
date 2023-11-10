@@ -1,10 +1,10 @@
 export const workBookDao = {
-    create : async(connection,name,summary,id)=>{
+    create : async(connection,name,id)=>{
         const createQuery = `
-            INSERT INTO workbook(name,summary,subject_id)
-            VALUES(?,?,?);
+            INSERT INTO workbook(name,subject_id)
+            VALUES(?,?);
         `;
-        const [createRow] = await connection.query(createQuery,[name,summary,id]);
+        const [createRow] = await connection.query(createQuery,[name,id]);
         return createRow;
     },
     getAll : async(connection,id)=>{
@@ -15,5 +15,13 @@ export const workBookDao = {
         `
         const [getAllRow] = await connection.query(getAllQuery,id);
         return getAllRow;
+    },
+    insertSummary : async(connection,id,summary)=>{
+        const insertSummaryQuery = `
+            INSERT INTO workbook(summary)
+            VALUES(?)
+            WHERE workbook_id = ?;
+        `
+        const insertSummaryRow = await connection.query(insertSummaryQuery,summary,id);
     }
 }

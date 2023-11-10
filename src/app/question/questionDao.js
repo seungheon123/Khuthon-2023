@@ -11,10 +11,18 @@ export const QuestionDao = {
     },
     saveBlankAnswer : async(connection,id,keyword,seq) =>{
         const saveBlankAnswerQuery = `
-            INSERT INTO blan_questions(seq,keyword,blank_questions_id)
+            INSERT INTO blank_questions(seq,keyword,blank_questions_id)
             VALUES(?,?,?);
         `
-        const saveBlankAnswerRow = await connection.query(saveBlankAnswerQuery.[seq,keyword,id]);
+        const saveBlankAnswerRow = await connection.query(saveBlankAnswerQuery,[seq,keyword,id]);
         return saveBlankAnswerRow;
+    },
+    saveQuiz : async(connection,question,answer,workbookId) =>{
+        const saveQuizQuery = `
+            INSERT INTO quiz(question,answer,workbook_id)
+            VALUES(?,?,?);
+        `
+        const saveQuizRow = await connection.query(saveQuizQuery,[question,answer,workbookId]);
+        return saveQuizRow;
     }
 }

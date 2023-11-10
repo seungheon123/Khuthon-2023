@@ -9,15 +9,13 @@ export const workBookService = {
     create : async(body) =>{
         const subjectId = body.subjectId;
         const name = body.name;
-        const summary = body.summary;
         const connection = await pool.getConnection(async conn => conn);
-        const createResult = await workBookDao.create(connection,name,summary,subjectId);
+        const createResult = await workBookDao.create(connection,name,subjectId);
         connection.release();
         if(createResult){
             return response(baseResponse.SUCCESS,{
                 "workbookId":createResult.insertId,
-                "workbookName":name,
-                "explanation":summary
+                "workbookName":name            
             });
         }else return response(baseResponse.DB_ERROR);
     },

@@ -4,6 +4,7 @@ import { response } from "../../../config/response";
 import baseResponse from "../../../config/baseResponseStatus";
 import { QuestionDao } from "./questionDao";
 import pool from "../../../config/database";
+import { workBookDao } from "../workbook/workbookDao";
 
 export const QuestionService = {
     createQuestions : async(body)=>{
@@ -20,16 +21,21 @@ export const QuestionService = {
 
         //DB 저장
         const connection = await pool.getConnection(async conn => conn);
+        const insertSummary = await workBookDao.insertSummary(connection,workbookId,text);
         const saveBlank = QuestionDao.saveBlank(connection,workbookId,modifiedText);
         const blankId = saveBlank.insertId;
         
         for(let i = 0; i<keyWordsList.length; i++){
             const keyword = keyWordsList[i];
-            const saveBlankAnswer = QuestionDao.saveBlankAnswer(connection,blankId,keyword,i+1);
+            await QuestionDao.saveBlankAnswer(connection,blankId,keyword,i+1);
         }
 
+        for(let i = 0; i<newQuestions[0].length; i++){
+            const question = newQuestions[0][i];
+            const answer = newQuestions[1][i];
+            await QuestionDao.saveQuiz(connection,question,answer,workbookId);
+        }
         
-
 
         return response(baseResponse.SUCCESS,{keyWordsList,modifiedText,newQuestions});
         /* 수진이꺼
