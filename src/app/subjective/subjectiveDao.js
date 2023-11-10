@@ -7,6 +7,6 @@ export const SubjectiveDao = {
             WHERE workbook_id = ?;
         `;
         const [getDetailRow] = await connection.query(getDetailQuery,id);
-        return getDetailRow[0];
+        return getDetailRow;
     }
 }

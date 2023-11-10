@@ -3,7 +3,7 @@
 export const BlanksDao = {
     getText : async(connection,id)=>{
         const getTextQuery = `
-            SELECT content
+            SELECT blank_questions_id,content
             FROM blank_questions
             WHERE workbook_id = ?;
         `
@@ -14,9 +14,9 @@ export const BlanksDao = {
         const getAnswersQuery = `
             SELECT seq,keyword
             FROM blank_answers
-            WHERE workbook_id = ?;
+            WHERE blank_questions_id = ?;
         `
         const [getAnswersRow] = await connection.query(getAnswersQuery,id);
-        return getAnswersRow[0];
+        return getAnswersRow;
     }
 }

@@ -36,7 +36,10 @@ export const workBookService = {
     getDetail : async(id)=>{
         const connection = await pool.getConnection(async conn => conn);
         const blankText = await BlanksDao.getText(connection,id);
-        const blankAnswers = await BlanksDao.getAnswers(connection,id);
+        const blankQuestionsId = blankText.blank_questions_id;
+        console.log(blankText);
+        const blankAnswers = await BlanksDao.getAnswers(connection,blankQuestionsId);
+        console.log(blankAnswers);
         const quiz = await SubjectiveDao.getDetail(connection,id);
         connection.release();
         return response(baseResponse.SUCCESS,{

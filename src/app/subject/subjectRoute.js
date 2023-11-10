@@ -4,7 +4,7 @@ import { SubjectController } from "./subjectController";
 
 const subjectRouter = express.Router();
 
-subjectRouter.post("/create",jwtMiddleware,SubjectController.create);
-subjectRouter.get("/getAll",jwtMiddleware,SubjectController.getAll);
+subjectRouter.post("/create",SubjectController.create);
+subjectRouter.get("/getAll",SubjectController.getAll);
 
 export default subjectRouter;

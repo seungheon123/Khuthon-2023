@@ -26,7 +26,7 @@ export const workBookControlelr = {
     },
     getDetail : async(req,res)=>{
         try{
-            const id = req.param.id;
+            const id = req.params.id;
             const result = await workBookService.getDetail(id);
             return res.status(200).send(result);
         }catch(err){

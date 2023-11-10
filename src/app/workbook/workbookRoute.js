@@ -4,7 +4,7 @@ import { workBookControlelr } from "./workbookController";
 
 const workbookRouter = express.Router();
 
-workbookRouter.post("/create",jwtMiddleware,workBookControlelr.create);
-workbookRouter.get("/get/:id",jwtMiddleware,workBookControlelr.getDetail);
+workbookRouter.post("/create",workBookControlelr.create);
+workbookRouter.get("/get/:id",workBookControlelr.getDetail);
 
 export default workbookRouter;

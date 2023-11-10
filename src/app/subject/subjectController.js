@@ -6,7 +6,7 @@ import { SubjectService } from "./subjectService";
 export const SubjectController = {
     create : async(req,res)=>{
         try{
-            const userIdFromJWT = req.verifiedToken.member_id;
+            //const userIdFromJWT = req.verifiedToken.member_id;
             const id = req.headers['member-id']
             const body = req.body;
             const result = await SubjectService.create(body,id);
@@ -18,7 +18,7 @@ export const SubjectController = {
     },
     getAll : async(req,res)=>{
         try{
-            const userIdFromJWT = req.verifiedToken.member_id;
+            //const userIdFromJWT = req.verifiedToken.member_id;
             const id = req.headers['member-id']
             const result = await SubjectService.getAll(id);
             return res.status(200).send(result);

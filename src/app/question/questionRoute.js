@@ -5,7 +5,7 @@ import {QuestionController} from "./questionController"
 
 const queRouter = express.Router();
 
-queRouter.post("/create",jwtMiddleware,QuestionController.create);
+queRouter.post("/create",QuestionController.create);
 
 
 export default queRouter;
