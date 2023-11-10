@@ -15,16 +15,23 @@ export const QuestionService = {
         const keyWords = await BlankService.getBlanks(blankNo,text);
         const keyWordsList = keyWords.data.keywords;
         const questions = await SubjectiveService.getQuestions(text,subNo);
-        const newQuestions = questions.data;
+        const newQuestions = questions.data.QnA;
         const modifiedText = replaceKeywordsWithBlank(text, keyWordsList);
 
         //DB 저장
-        const connection = pool.getConnection(async conn => conn);
+        const connection = await pool.getConnection(async conn => conn);
         const saveBlank = QuestionDao.saveBlank(connection,workbookId,modifiedText);
+        const blankId = saveBlank.insertId;
+        
+        for(let i = 0; i<keyWordsList.length; i++){
+            const keyword = keyWordsList[i];
+            const saveBlankAnswer = QuestionDao.saveBlankAnswer(connection,blankId,keyword,i+1);
+        }
+
+        
 
 
-        console.log(questions);
-        return response(baseResponse.SUCCESS,{keyWordsList,modifiedText,questions});
+        return response(baseResponse.SUCCESS,{keyWordsList,modifiedText,newQuestions});
         /* 수진이꺼
         const text = body.text;
         const keyWords = body.keyWords;
