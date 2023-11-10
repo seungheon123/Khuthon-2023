@@ -6,7 +6,7 @@ import { errResponse } from "./response.js";
 
 export const jwtMiddleware = (req,res,next) =>{
     // read the token from header or url
-    const token = req.headers.authorization || req.query.token;
+    const token = req.headers['x-access-token'] || req.query.token;
     // token does not exist
     if(!token) {
         return res.send(errResponse(baseResponse.TOKEN_EMPTY))
