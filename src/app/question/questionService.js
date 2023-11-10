@@ -1,8 +1,8 @@
-import axios from "axios";
 import { BlankService } from "../blanks/blanksSerivce";
 import { SubjectiveService } from "../subjective/subjectiveService";
 import { response } from "../../../config/response";
 import baseResponse from "../../../config/baseResponseStatus";
+
 export const QuestionService = {
     createQuestions : async(body)=>{
         const text = body.text;
@@ -21,8 +21,17 @@ export const QuestionService = {
         const modifiedText = replaceKeywordsWithBlank(text, keyWordsList);
         return response(baseResponse.SUCCESS,{keyWordsList,modifiedText});
         */
+    },
+    createVoiceQuestion : async()=>{
+        const text = WhisperService.createText();
+        console.log(text);
+        return response(baseResponse.SUCCESS,text);
     }
 }
+
+
+
+
 
 function replaceKeywordsWithBlank(text, keywords) {
     const modifiedText = keywords.reduce((modified, keyword, index) => {
