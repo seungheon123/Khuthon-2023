@@ -22,8 +22,9 @@ export const QuestionService = {
         //DB 저장
         const connection = await pool.getConnection(async conn => conn);
         const insertSummary = await workBookDao.insertSummary(connection,workbookId,text);
-        const saveBlank = QuestionDao.saveBlank(connection,workbookId,modifiedText);
+        const saveBlank = await QuestionDao.saveBlank(connection,workbookId,modifiedText);
         const blankId = saveBlank.insertId;
+        console.log(blankId);
         
         for(let i = 0; i<keyWordsList.length; i++){
             const keyword = keyWordsList[i];
