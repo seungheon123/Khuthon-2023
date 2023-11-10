@@ -6,7 +6,7 @@ export const QuestionDao = {
             INSERT INTO blank_questions(workbook_id,content)
             VALUES(?,?);
         `
-        const saveBlankRow = await connection.query(saveBlankQuery,[id,content]);
+        const [saveBlankRow] = await connection.query(saveBlankQuery,[id,content]);
         return saveBlankRow;
     },
     saveBlankAnswer : async(connection,id,keyword,seq) =>{
